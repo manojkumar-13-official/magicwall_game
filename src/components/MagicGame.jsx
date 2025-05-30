@@ -7,6 +7,7 @@ import Cpp from "../assets/Cpp.png";
 import ReactImg from "../assets/React.png";
 import Angular from "../assets/Angular.png";
 import Confetti from 'react-confetti';
+// In App.css it include the card Turning and animation are applied
 import '../App.css';
 
 const cardImages = [
