@@ -6,9 +6,9 @@ import Python from "../assets/Python.png";
 import Cpp from "../assets/Cpp.png";
 import ReactImg from "../assets/React.png";
 import Angular from "../assets/Angular.png";
-import Confetti from 'react-confetti';
+import Confetti from "react-confetti";
 // In App.css it include the card Turning and animation are applied
-import '../App.css';
+import "../App.css";
 
 const cardImages = [
   { src: JS, name: "JS" },
@@ -31,10 +31,10 @@ const MagicGame = () => {
 
   // Check if all cards are matched
   useEffect(() => {
-    if (cards.length > 0 && cards.every(card => card.matched)) {
+    if (cards.length > 0 && cards.every((card) => card.matched)) {
       setIsAnimating(true);
       setShowConfetti(true);
-      
+
       setTimeout(() => {
         setGameCompleted(true);
         setShowConfetti(false);
@@ -45,8 +45,13 @@ const MagicGame = () => {
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random(), flipped: false, matched: false }));
-    
+      .map((card) => ({
+        ...card,
+        id: Math.random(),
+        flipped: false,
+        matched: false,
+      }));
+
     setCards(shuffledCards);
     setTurns(0);
     setChoiceOne(null);
@@ -57,22 +62,29 @@ const MagicGame = () => {
   };
 
   const handleChoice = (card) => {
-    if (card.flipped || disabled || card.matched || gameCompleted || isAnimating) return;
-    
+    if (
+      card.flipped ||
+      disabled ||
+      card.matched ||
+      gameCompleted ||
+      isAnimating
+    )
+      return;
+
     if (!choiceOne) {
       setChoiceOne(card);
       flipCard(card.id, true);
     } else if (!choiceTwo) {
       setChoiceTwo(card);
       flipCard(card.id, true);
-      setTurns(prevTurns => prevTurns + 1);
+      setTurns((prevTurns) => prevTurns + 1);
       checkForMatch(card);
     }
   };
 
   const flipCard = (id, flip) => {
-    setCards(prevCards => 
-      prevCards.map(card => 
+    setCards((prevCards) =>
+      prevCards.map((card) =>
         card.id === id ? { ...card, flipped: flip } : card
       )
     );
@@ -80,10 +92,10 @@ const MagicGame = () => {
 
   const checkForMatch = (secondChoice) => {
     setDisabled(true);
-    
+
     if (choiceOne.name === secondChoice.name) {
-      setCards(prevCards =>
-        prevCards.map(card =>
+      setCards((prevCards) =>
+        prevCards.map((card) =>
           card.name === choiceOne.name ? { ...card, matched: true } : card
         )
       );
@@ -109,8 +121,14 @@ const MagicGame = () => {
 
   return (
     <div className="bg-fuchsia-950 min-h-screen w-screen py-4 px-2 relative overflow-hidden">
-      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} />}
-      
+      {showConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          recycle={false}
+        />
+      )}
+
       <div className="container mx-auto flex justify-center flex-col items-center">
         <h1 className="text-2xl md:text-3xl font-bold text-white py-4 font-game">
           Magic Wall
@@ -128,7 +146,9 @@ const MagicGame = () => {
           <div className="relative h-64 w-64 md:h-80 md:w-80 bg-white rounded-lg shadow-2xl flex items-center justify-center overflow-hidden transition-all duration-1000 transform scale-110">
             <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500 to-purple-600 opacity-80"></div>
             <div className="relative z-10 text-center p-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Congratulations!</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                Congratulations!
+              </h2>
               <p className="text-white text-lg md:text-xl mb-6">
                 You won the game in {turns} turns!
               </p>
@@ -149,18 +169,18 @@ const MagicGame = () => {
                 key={card.id}
                 className={`absolute transition-all duration-1000 ease-in-out`}
                 style={{
-                  top: '50%',
-                  left: '50%',
+                  top: "50%",
+                  left: "50%",
                   transform: `translate(-50%, -50%) scale(${1 - index * 0.05})`,
                   zIndex: 12 - index,
                   opacity: 1 - index * 0.08,
-                  transitionDelay: `${index * 50}ms`
+                  transitionDelay: `${index * 50}ms`,
                 }}
               >
                 <div className="h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-32 lg:w-32">
-                  <img 
-                    src={card.src} 
-                    alt={card.name} 
+                  <img
+                    src={card.src}
+                    alt={card.name}
                     className="w-full h-full object-cover rounded-lg shadow-lg"
                   />
                 </div>
@@ -180,12 +200,14 @@ const MagicGame = () => {
                 onClick={() => handleChoice(card)}
               >
                 <div className="absolute w-full h-full backface-hidden rounded-lg overflow-hidden shadow-md">
-                  <div className={`absolute w-full h-full flex justify-center items-center transition-all duration-500 ${
-                    card.flipped ? "rotate-y-180" : ""
-                  }`}>
-                    <img 
-                      src={card.flipped ? card.src : Cover} 
-                      alt={card.flipped ? card.name : "card back"} 
+                  <div
+                    className={`absolute w-full h-full flex justify-center items-center transition-all duration-500 ${
+                      card.flipped ? "rotate-y-180" : ""
+                    }`}
+                  >
+                    <img
+                      src={card.flipped ? card.src : Cover}
+                      alt={card.flipped ? card.name : "card back"}
                       className="w-full h-full object-cover"
                     />
                   </div>
