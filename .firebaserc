@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "magicwallgame",
+    "staging": "magicwallgame"
+  },
+  "targets": {},
+  "etags": {}
+}
